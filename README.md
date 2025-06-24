@@ -15,7 +15,7 @@ Melhorias visuais para navegação e edição
 
 1 - Clone ou baixe este repositório
 
-git clone https://github.com/seu-usuario/seu-repositorio.git
+git clone (https://github.com/LucasPolicarpo-svg/ShopApp-Extension.git)
 
 Ou clique no botão Code → Download ZIP, depois extraia o conteúdo.
 
