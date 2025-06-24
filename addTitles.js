@@ -11,12 +11,13 @@ cmsHelpertargetImages.forEach((img) => {
   if (titleText && !img.nextSibling?.classList?.contains('cms-helper-title')) {
     const span = document.createElement('span');
     span.className = 'cms-helper-title';
-    span.style.background = "#cdcdcd"
-    span.style.border = "solid 1px"
+    span.style.background = "#e3e3e3"
     span.style.display = "block";
     span.style.fontSize = "15px";
     span.style.fontWeight = "bold";
     span.style.textWrap = "wrap";
+    span.style.fontFamily = "Poppins";
+    span.style.color = "#454545";
     span.innerText = titleText;
     img.parentNode.appendChild(span);
   } else {
@@ -26,3 +27,4 @@ cmsHelpertargetImages.forEach((img) => {
     })
   }
 });
+

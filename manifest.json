@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "ShopApp See More",
+  "name": "ShopApp Helper",
   "version": "1.0",
   "description": "Facilitador de vizualização e edição de conteudo no CMS ShopApp.",
   "permissions": ["activeTab", "scripting"],
