@@ -3,15 +3,17 @@ Esta é uma extensão interna, criada para ajudar a customizar e modificar visua
 Ela não está publicada na Chrome Web Store, então a instalação precisa ser feita manualmente.
 
 ✅ Principais funcionalidades
-Modificações rápidas de layout no CMS
 
-Ajuste de visibilidade de elementos
+Adicionar bordas vermelhas no preview dos widgets
 
-Automação de pequenas tarefas repetitivas
+Adicionar o Title do Widget no preview para facilitar a pesquisa
 
-Melhorias visuais para navegação e edição
+Mostrar ou esconder os widgets expirados
+
+
 
 📥 Como instalar a extensão manualmente no Chrome
+
 
 1 - Clone ou baixe este repositório
 
@@ -36,6 +38,8 @@ No canto superior direito da tela.
 
 Selecione a pasta onde estão os arquivos da extensão (a pasta que contém o manifest.json).
 
+
+
 🚀 Como usar
 Após instalar:
 
@@ -44,6 +48,8 @@ O ícone da extensão vai aparecer na barra de extensões do Chrome.
 Clique nele para ativar/desativar os recursos.
 
 Algumas mudanças podem exigir recarregar a página do CMS.
+
+
 
 🧱 Estrutura básica dos arquivos
 
@@ -54,6 +60,8 @@ Algumas mudanças podem exigir recarregar a página do CMS.
 * /scripts/ → Scripts de modificação do CMS
 
 * (Adicione aqui outras pastas se tiver)
+
+  
 
 ⚠️ Importante
 
