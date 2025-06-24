@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "ShopApp See More",
+  "version": "1.0",
+  "description": "Facilitador de vizualização e edição de conteudo no CMS ShopApp.",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": [
+    "https://opstools-p1-br.ecom-qa.samsung.com/*",
+    "https://opstools-p1-pe.ecom-qa.samsung.com/*",
+    "https://opstools-p1-cl.ecom-qa.samsung.com/*",
+    "https://opstools-p1-co.ecom-qa.samsung.com/*",
+    "https://opstools-p1-mx.ecom-qa.samsung.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://opstools-p1-br.ecom-qa.samsung.com/*",
+        "https://opstools-p1-pe.ecom-qa.samsung.com/*",
+        "https://opstools-p1-cl.ecom-qa.samsung.com/*",
+        "https://opstools-p1-co.ecom-qa.samsung.com/*",
+        "https://opstools-p1-mx.ecom-qa.samsung.com/*"
+      ],
+      "js": ["removeRedBorder.js","hideExpired.js", "index.js"],
+      "css": ["content.css"]
+    }
+  ],
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "64": "icons/icon64.png",
+    "128": "icons/icon128.png"
+  },
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "64": "icons/icon64.png",
+      "128": "icons/icon128.png"
+    }
+  }
+}
