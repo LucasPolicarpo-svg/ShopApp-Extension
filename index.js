@@ -30,6 +30,7 @@ function applyChanges() {
 
         // Agora, só um loop pelas imagens
         cmsHelpertargetImages.forEach((img) => {
+          
         const titleText = img.getAttribute('title').trimEnd();
 
         // Adiciona o span com o título, se ainda não tiver
@@ -37,7 +38,8 @@ function applyChanges() {
             const span = document.createElement('span');
             span.className = 'cms-helper-title';
             span.style.background = "#e3e3e3"
-            span.style.display = "block";
+            span.style.display = "flex";
+            span.style.flexDirection = "column";
             span.style.fontSize = "15px";
             span.style.fontWeight = "bold";
             span.style.textWrap = "wrap";
@@ -126,36 +128,20 @@ function removeChanges() {
   });
 }
 
-// Variável para controlar o estado da extensão neste tab
 let isExtensionActive = false;
 
-/**
- * Função para aplicar as mudanças da extensão.
- * Ela só deve ser chamada se a extensão estiver ativa para a URL atual.
- */
 function activateExtension() {
     if (isExtensionActive) {
         console.log("Extensão ativada para URL com '/offer'!");
         applyChanges();
-       
-
-        // Você pode adicionar seus event listeners aqui.
-        // Guarde referências a eles se precisar removê-los em `deactivateExtension`.
     }
 }
 
-/**
- * Função para limpar/desativar as mudanças da extensão.
- */
 function deactivateExtension() {
     console.log("Desativando a extensão (URL não contém '/offer').");
     isExtensionActive = false; // Define o estado como inativo
 
-    // *** SUA LÓGICA PARA LIMPAR/REVERTER MUDANÇAS AQUI ***
     removeChanges();
-
-    // Remova quaisquer event listeners que sua extensão possa ter adicionado
-    // Ex: document.removeEventListener('click', yourClickHandler);
 }
 
 // Escutar mensagens do Service Worker (background.js)
@@ -166,9 +152,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // Você pode adicionar outras ações aqui se precisar
 });
 
-// Lógica inicial quando o content.js é injetado:
-// Como o background.js só injeta este script quando a URL já contém "/offer",
-// podemos assumir que, na primeira injeção, a extensão deve estar ativa.
+
 isExtensionActive = true;
 activateExtension();
 
