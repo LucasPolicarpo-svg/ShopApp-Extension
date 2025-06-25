@@ -3,7 +3,7 @@
   "name": "ShopApp Helper",
   "version": "1.0",
   "description": "Facilitador de vizualização e edição de conteudo no CMS ShopApp.",
-  "permissions": ["activeTab", "scripting"],
+  "permissions": ["activeTab", "scripting", "webNavigation"],
   "host_permissions": [
     "https://opstools-p1-br.ecom-qa.samsung.com/*",
     "https://opstools-p1-pe.ecom-qa.samsung.com/*",
@@ -11,14 +11,17 @@
     "https://opstools-p1-co.ecom-qa.samsung.com/*",
     "https://opstools-p1-mx.ecom-qa.samsung.com/*"
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_scripts": [
     {
       "matches": [
-        "https://opstools-p1-br.ecom-qa.samsung.com/*",
-        "https://opstools-p1-pe.ecom-qa.samsung.com/*",
-        "https://opstools-p1-cl.ecom-qa.samsung.com/*",
-        "https://opstools-p1-co.ecom-qa.samsung.com/*",
-        "https://opstools-p1-mx.ecom-qa.samsung.com/*"
+        "https://opstools-p1-br.ecom-qa.samsung.com/ops-web/shopcms/widgets/Offerv2?store_id=br&device_type=default&site_id=br",
+        "https://opstools-p1-pe.ecom-qa.samsung.com/ops-web/shopcms/widgets/Offerv2?store_id=pe&device_type=default&site_id=pe",
+        "https://opstools-p1-cl.ecom-qa.samsung.com/ops-web/shopcms/widgets/Offerv2?store_id=cl&device_type=default&site_id=cl",
+        "https://opstools-p1-co.ecom-qa.samsung.com/ops-web/shopcms/widgets/Offerv2?store_id=co&device_type=default&site_id=co",
+        "https://opstools-p1-mx.ecom-qa.samsung.com/ops-web/shopcms/widgets/Offerv2?store_id=mx&device_type=default&site_id=mx"
       ],
       "js": ["removeRedBorder.js","hideExpired.js", "index.js"],
       "css": ["content.css"]

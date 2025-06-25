@@ -3,7 +3,7 @@ link.rel = 'stylesheet';
 link.href = 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap';
 document.head.appendChild(link);
 
-(function() {
+function applyChanges() {
   // Função que aplica as bordas
   function applyBorders() {
     const cmsHelpertargetImages = document.querySelectorAll('div.widgets-preview-h-full-horizontal img[title]');
@@ -43,6 +43,7 @@ document.head.appendChild(link);
             span.style.textWrap = "wrap";
             span.style.fontFamily = "Poppins";
             span.style.color = "#454545";
+            span.style.maxWidth = "270px";
             span.innerText = titleText;
             img.parentNode.appendChild(span);
             
@@ -54,6 +55,7 @@ document.head.appendChild(link);
             paste.style.right = "10px";
             paste.style.marginTop = "2px";
             paste.style.cursor = "pointer";
+            paste.style.zIndex = "10000";
 
             async function pasteToClipboard() {
               await navigator.clipboard.writeText(titleText);
@@ -97,8 +99,78 @@ document.head.appendChild(link);
     clearBorders();
   };
 
-})();
+};
 
+function removeChanges() {
+  const spans = document.querySelectorAll('.cms-helper-title');
+  spans.forEach((span) => {
+    span.style.display = "none";
+  })
+
+  cmsHelpertargetImages = document.querySelectorAll('div.widgets-preview-h-full-horizontal img[title]');
+  cmsHelperExpiredDivs = document.querySelectorAll('div.widget-card-expired');
+
+  // Primeiro, cria um array com TODOS os textos de spans dentro das divs expiradas
+  expiredSpanTexts = Array.from(cmsHelperExpiredDivs)
+    .flatMap(div => Array.from(div.querySelectorAll('span')).map(span => span.innerText));
+
+  // Agora, só um loop pelas imagens
+  cmsHelpertargetImages.forEach((img) => {
+    const titleText = img.getAttribute('title').trimEnd();
+
+    const hasMatch = expiredSpanTexts.includes(titleText);
+
+    if (hasMatch) {
+      img.parentNode.style.border = 'none';
+    }
+  });
+}
+
+// Variável para controlar o estado da extensão neste tab
+let isExtensionActive = false;
+
+/**
+ * Função para aplicar as mudanças da extensão.
+ * Ela só deve ser chamada se a extensão estiver ativa para a URL atual.
+ */
+function activateExtension() {
+    if (isExtensionActive) {
+        console.log("Extensão ativada para URL com '/offer'!");
+        applyChanges();
+       
+
+        // Você pode adicionar seus event listeners aqui.
+        // Guarde referências a eles se precisar removê-los em `deactivateExtension`.
+    }
+}
+
+/**
+ * Função para limpar/desativar as mudanças da extensão.
+ */
+function deactivateExtension() {
+    console.log("Desativando a extensão (URL não contém '/offer').");
+    isExtensionActive = false; // Define o estado como inativo
+
+    // *** SUA LÓGICA PARA LIMPAR/REVERTER MUDANÇAS AQUI ***
+    removeChanges();
+
+    // Remova quaisquer event listeners que sua extensão possa ter adicionado
+    // Ex: document.removeEventListener('click', yourClickHandler);
+}
+
+// Escutar mensagens do Service Worker (background.js)
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.action === "deactivateExtension") {
+        deactivateExtension();
+    }
+    // Você pode adicionar outras ações aqui se precisar
+});
+
+// Lógica inicial quando o content.js é injetado:
+// Como o background.js só injeta este script quando a URL já contém "/offer",
+// podemos assumir que, na primeira injeção, a extensão deve estar ativa.
+isExtensionActive = true;
+activateExtension();
 
 
 
