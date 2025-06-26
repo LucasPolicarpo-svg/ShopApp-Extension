@@ -8,6 +8,7 @@
 // });
 
 
+
 // background.js (Service Worker)
 
 // Escuta por eventos de navegação completos (quando uma página é carregada)

@@ -128,12 +128,64 @@ function removeChanges() {
   });
 }
 
+
+
+// funções principais
+  function limparEspacosInput() {
+    const inp = document.getElementById("_marketingData[0].deeplinkQuery");
+    if (inp) inp.value = inp.value.replace(/\s/g, "");
+   
+    // Substitui http:// por https://
+    inp.value = inp.value.replace(/^http:\/\//, "https://");
+
+    // Se não começar com https://, adiciona
+    if (!inp.value.startsWith("https://")) {
+      inp.value = "https://" + inp.value;
+    }
+
+  }
+ 
+  function atualizarDataNoTitulo() {
+    const inp = document.getElementById("_marketingData[0].analyticsTitle");
+    if (!inp) return;
+    const val = inp.value;
+    const dt = new Date();
+    const df = `_${dt.getFullYear()}${String(dt.getMonth()+1).padStart(2,'0')}${String(dt.getDate()).padStart(2,'0')}`;
+    inp.value = /_\d{8}$/.test(val) ? val.replace(/_\d{8}$/, df) : val + df;
+  }
+ 
+  // recebendo comandos do iframe
+  window.addEventListener('message', e => {
+    if (e.data === 'executar') {
+      limparEspacosInput();
+      atualizarDataNoTitulo();
+    }
+    if (e.data?.type === 'pos') {
+      setIframePosition(e.data.value);
+    }
+  });
+
+
+// Listeners do background.js
 let isExtensionActive = false;
 
 function activateExtension() {
     if (isExtensionActive) {
         console.log("Extensão ativada para URL com '/offer'!");
         applyChanges();
+        // listeners blur para os campos
+        const observer2 = new MutationObserver(() => {
+          ['_marketingData[0].deeplinkQuery', '_marketingData[0].analyticsTitle'].forEach(idObserver => {
+            const el = document.getElementById(idObserver);
+            if (el && !el.dataset.lstn) {
+              const fn = idObserver.includes('deeplink') ? limparEspacosInput : atualizarDataNoTitulo;
+              el.addEventListener('blur', fn);
+              el.dataset.lstn = '1';
+            }
+          });
+        });
+      
+        observer2.observe(document.body, { childList: true, subtree: true });
     }
 }
 
@@ -155,6 +207,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 isExtensionActive = true;
 activateExtension();
+
 
 
 
