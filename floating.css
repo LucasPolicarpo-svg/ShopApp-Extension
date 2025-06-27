@@ -1,0 +1,212 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Evita scrollbars dentro do iframe */
+  font-family: 'Press Start 2P', cursive, 'Poppins', sans-serif;
+  background-color: #0d1b2a; /* Azul escuro, ambiente arcade */
+  color: #f0f0f0;
+  width: 340px; /* Largura fixa para o conteúdo do iframe */
+  max-width: 90vw;
+  border: none;
+  border-radius: 12px;
+  box-shadow: none;
+  animation: fadeInUp 0.4s ease-out;
+  box-sizing: border-box;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#ext-box {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Espaço entre as seções */
+  padding: 20px;
+  box-sizing: border-box;
+  height: auto; /* Permite que o conteúdo dite a altura */
+}
+
+h1 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 14px;
+  color: #fff; /* Título branco */
+  margin-bottom: 16px;
+  letter-spacing: 2px;
+  text-align: center;
+  text-shadow: 2px 2px 0 #e60012; /* Contorno vermelho para o título */
+}
+
+#pos-btns {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+#pos-btns button {
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  border: 3px solid #6a0dad; /* Borda roxa */
+  background: linear-gradient(145deg, #8a2be2, #4b0082); /* Gradiente roxo */
+  color: white;
+  border-radius: 6px;
+  box-shadow: inset 0 0 8px #9370db, 0 4px 0 #3a006f; /* Sombra interna, sombra inferior */
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif; /* Poppins para botões de posição */
+}
+
+#pos-btns button:hover {
+  border-color: #fff;
+  background: linear-gradient(145deg, #9370db, #6a0dad);
+  box-shadow: inset 0 0 12px #fff, 0 6px 0 #3a006f;
+  transform: translateY(-2px);
+}
+
+.input-copy {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.input-copy input[type="text"] {
+  flex-grow: 1;
+  padding: 10px;
+  border: 2px solid #66aaff; /* Borda azul clara */
+  background-color: #1a2a3a; /* Fundo mais escuro para input */
+  color: #f0f0f0;
+  border-radius: 4px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+}
+
+.input-copy input[type="text"]::placeholder {
+  color: #a0a0a0;
+}
+
+.copy-btn {
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  border: 3px solid #007bff; /* Borda azul */
+  background: linear-gradient(145deg, #007bff, #0056b3); /* Gradiente azul */
+  color: white;
+  border-radius: 6px;
+  box-shadow: inset 0 0 8px #66aaff, 0 4px 0 #003d80;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.copy-btn:hover {
+  border-color: #fff;
+  background: linear-gradient(145deg, #66aaff, #007bff);
+  box-shadow: inset 0 0 12px #fff, 0 6px 0 #003d80;
+  transform: translateY(-2px);
+}
+
+/* Estilos comuns para botões (existentes e novos) */
+#execute, #minimizar, .feature-buttons-group button {
+  padding: 12px 16px;
+  font-size: 11px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-family: 'Press Start 2P', cursive;
+  color: white;
+  box-shadow: inset 0 0 8px, 0 4px 0;
+  transition: all 0.3s ease;
+  border-width: 3px;
+  border-style: solid;
+  /* Garante que os botões dentro de grupos flex se comportem bem */
+  box-sizing: border-box;
+}
+
+/* Estilos específicos para botões existentes */
+#execute {
+  border-color: #008000; /* Verde */
+  background: linear-gradient(145deg, #008000, #004d00);
+  box-shadow: inset 0 0 8px #4ddf6d, 0 4px 0 #003d00;
+}
+
+#execute:hover {
+  border-color: #fff;
+  background: linear-gradient(145deg, #4ddf6d, #197d39);
+  box-shadow: inset 0 0 12px #fff, 0 7px 0 #1b6614;
+  transform: translateY(-2px);
+}
+
+#minimizar {
+  border-color: #ff3c00; /* Vermelho */
+  background: linear-gradient(145deg, #ff3c00, #a50000);
+  box-shadow: inset 0 0 8px #ff6f4d, 0 4px 0 #8c0000;
+}
+
+#minimizar:hover {
+  border-color: #fff;
+  background: linear-gradient(145deg, #ff6f4d, #c33a00);
+  box-shadow: inset 0 0 12px #fff, 0 6px 0 #8c0000;
+  transform: translateY(-2px);
+}
+
+/* Estilo para os novos grupos de botões de funcionalidade */
+.feature-buttons-group {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os botões quebrem para a próxima linha */
+    gap: 10px; /* Espaço entre os botões dentro do grupo */
+    justify-content: space-between; /* Distribui o espaço entre os botões */
+}
+
+.feature-buttons-group button {
+    flex: 1 1 calc(50% - 5px); /* Dois botões por linha, com um gap */
+    min-width: 120px; /* Garante que os botões não fiquem muito pequenos */
+}
+
+/* Estilos específicos para os novos botões de funcionalidade, reutilizando temas existentes */
+#addRedBorders, #removeRedBorders {
+  border-color: #ff3c00; /* Vermelho para bordas */
+  background: linear-gradient(145deg, #ff3c00, #a50000);
+  box-shadow: inset 0 0 8px #ff6f4d, 0 4px 0 #8c0000;
+}
+#addRedBorders:hover, #removeRedBorders:hover {
+  border-color: #fff;
+  background: linear-gradient(145deg, #ff6f4d, #c33a00);
+  box-shadow: inset 0 0 12px #fff, 0 6px 0 #8c0000;
+  transform: translateY(-2px);
+}
+
+#injectTitles, #removeTitles {
+  border-color: #007bff; /* Azul para títulos */
+  background: linear-gradient(145deg, #007bff, #0056b3);
+  box-shadow: inset 0 0 8px #66aaff, 0 4px 0 #003d80;
+}
+#injectTitles:hover, #removeTitles:hover {
+  border-color: #fff;
+  background: linear-gradient(145deg, #66aaff, #007bff);
+  box-shadow: inset 0 0 12px #fff, 0 6px 0 #003d80;
+  transform: translateY(-2px);
+}
+
+#injectShowExpired, #injectHideExpired {
+  border-color: #6a0dad; /* Roxo para expirados */
+  background: linear-gradient(145deg, #8a2be2, #4b0082);
+  box-shadow: inset 0 0 8px #9370db, 0 4px 0 #3a006f;
+}
+#injectShowExpired:hover, #injectHideExpired:hover {
+  border-color: #fff;
+  background: linear-gradient(145deg, #9370db, #6a0dad);
+  box-shadow: inset 0 0 12px #fff, 0 6px 0 #3a006f;
+  transform: translateY(-2px);
+}

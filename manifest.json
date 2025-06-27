@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "ShopApp Helper",
-  "version": "1.0",
-  "description": "Facilitador de vizualização e edição de conteudo no CMS ShopApp.",
-  "permissions": ["activeTab", "scripting", "webNavigation"],
+  "name": "Automação Shop App",
+  "version": "1.1",
+  "description": "Unificação das extensões para automação do Shop App, incluindo ferramentas de CMS Helper.",
+  "permissions": ["scripting", "activeTab", "storage", "webNavigation"],
   "host_permissions": [
     "https://opstools-p1-br.ecom-qa.samsung.com/*",
     "https://opstools-p1-pe.ecom-qa.samsung.com/*",
@@ -14,32 +14,20 @@
   "background": {
     "service_worker": "background.js"
   },
+  "action": {
+    "default_title": "Ativar Automação Shop App"
+  },
   "content_scripts": [
     {
-      "matches": [
-        "https://opstools-p1-br.ecom-qa.samsung.com/ops-web/shopcms/widgets/Offerv2?store_id=br&device_type=default&site_id=br",
-        "https://opstools-p1-pe.ecom-qa.samsung.com/ops-web/shopcms/widgets/Offerv2?store_id=pe&device_type=default&site_id=pe",
-        "https://opstools-p1-cl.ecom-qa.samsung.com/ops-web/shopcms/widgets/Offerv2?store_id=cl&device_type=default&site_id=cl",
-        "https://opstools-p1-co.ecom-qa.samsung.com/ops-web/shopcms/widgets/Offerv2?store_id=co&device_type=default&site_id=co",
-        "https://opstools-p1-mx.ecom-qa.samsung.com/ops-web/shopcms/widgets/Offerv2?store_id=mx&device_type=default&site_id=mx"
-      ],
-      "js": ["removeRedBorder.js","hideExpired.js", "index.js"],
-      "css": ["content.css"]
+      "matches": ["https://*/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
     }
   ],
-
-  "icons": {
-    "16": "icons/icon16.png",
-    "64": "icons/icon64.png",
-    "128": "icons/icon128.png"
-  },
-
-  "action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "16": "icons/icon16.png",
-      "64": "icons/icon64.png",
-      "128": "icons/icon128.png"
+  "web_accessible_resources": [
+    {
+      "resources": ["floating.html", "floating.css", "floating.js"],
+      "matches": ["https://*/*"]
     }
-  }
+  ]
 }

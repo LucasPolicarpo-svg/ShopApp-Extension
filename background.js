@@ -1,66 +1,60 @@
-// // background.js (Service Worker)
-
-// chrome.webNavigation.onHistoryStateUpdated.addListener(function(details) {
-//   if (details.url.startsWith("https://opstools-p1")) {
-//     console.log("URL de SPA mudou para:", details.url);
-//     chrome.tabs.sendMessage(details.tabId, { action: "urlChanged", newUrl: details.url });
-//   }
-// });
-
-
-
 // background.js (Service Worker)
 
-// Escuta por eventos de navegação completos (quando uma página é carregada)
+// Listener para o clique no ícone da extensão
+chrome.action.onClicked.addListener((tab) => {
+  // Verifica se a URL da aba é um domínio do ShopApp
+  if (tab.url && isShopAppUrl(tab.url)) {
+    // Envia uma mensagem para o content.js para mostrar o painel
+    chrome.tabs.sendMessage(tab.id, { action: 'show_panel' })
+      .catch(error => {
+        console.warn("Automação Shop App: Não foi possível enviar a mensagem 'show_panel'. O script de conteúdo pode não estar pronto ou a URL mudou.", error);
+      });
+  } else {
+    console.log("Automação Shop App: A extensão só funciona em domínios ShopApp (opstools-p1).");
+    // Opcional: Você pode adicionar uma notificação visual aqui para o usuário.
+  }
+});
+
+// Função auxiliar para verificar se a URL é um domínio do ShopApp
+function isShopAppUrl(url) {
+  return url.startsWith("https://opstools-p1-br.ecom-qa.samsung.com/") ||
+         url.startsWith("https://opstools-p1-pe.ecom-qa.samsung.com/") ||
+         url.startsWith("https://opstools-p1-cl.ecom-qa.samsung.com/") ||
+         url.startsWith("https://opstools-p1-co.ecom-qa.samsung.com/") ||
+         url.startsWith("https://opstools-p1-mx.ecom-qa.samsung.com/");
+}
+
+// Listener para navegações completas (carregamento de página)
 chrome.webNavigation.onCommitted.addListener(function(details) {
-    // Garante que é o frame principal e que está no domínio correto
-    if (details.frameId === 0 && details.url.startsWith("https://opstools-p1")) {
-        handleUrlChange(details.url, details.tabId);
+    if (details.frameId === 0) { // Garante que é o frame principal
+        handleNavigation(details.url, details.tabId);
     }
 });
 
-// Escuta por mudanças de histórico em SPAs (Single Page Applications)
+// Listener para mudanças de histórico em SPAs (Single Page Applications)
 chrome.webNavigation.onHistoryStateUpdated.addListener(function(details) {
-    // Garante que é o frame principal e que está no domínio correto
-    if (details.frameId === 0 && details.url.startsWith("https://opstools-p1")) {
-        handleUrlChange(details.url, details.tabId);
+    if (details.frameId === 0) { // Garante que é o frame principal
+        handleNavigation(details.url, details.tabId);
     }
 });
 
 /**
- * Função para lidar com a mudança de URL e injetar/remover o content_script.
- * @param {string} currentUrl - A URL atual da aba.
+ * Lida com eventos de navegação para ativar ou desativar as funcionalidades no content.js.
+ * @param {string} url - A URL atual da aba.
  * @param {number} tabId - O ID da aba.
  */
-function handleUrlChange(currentUrl, tabId) {
-    console.log("URL detectada:", currentUrl);
-
-    // Verifica se a URL contém "/offer"
-    if (currentUrl.includes("Offerv2")) {
-        console.log("URL contém 'Offerv2'. Injetando index.js...");
-        // Injeta o content.js
-        chrome.scripting.executeScript({
-            target: { tabId: tabId },
-            files: ['index.js']
-        }).then(() => {
-            console.log("index.js injetado com sucesso!");
-        }).catch(error => {
-            console.error("Erro ao injetar index.js:", error);
-        });
+function handleNavigation(url, tabId) {
+    if (isShopAppUrl(url)) {
+        console.log("Automação Shop App: Navegação em URL do ShopApp detectada:", url);
+        // Não precisamos "ativar" explicitamente aqui, pois content.js sempre é injetado.
+        // O content.js irá gerenciar suas funcionalidades internamente com base na URL e mensagens.
     } else {
-        console.log("URL NÃO contém 'Offerv2'. Removendo/parando index.js...");
-        // Se a URL não contém "/offer", tentamos remover o content.js.
-        // A remoção direta do content_script não é tão simples quanto a injeção.
-        // A melhor abordagem é fazer com que o próprio content.js se desative.
-        // Vamos enviar uma mensagem para o content.js (se ele estiver ativo)
-        // para que ele limpe seus elementos e listeners.
+        console.log("Automação Shop App: Navegação fora do ShopApp. Enviando mensagem para desativar funcionalidades.");
+        // Envia mensagem para o content.js para desativar suas funcionalidades e remover o painel
         chrome.tabs.sendMessage(tabId, { action: "deactivateExtension" })
-            .then(() => {
-                console.log("Mensagem de desativação enviada para index.js.");
-            })
             .catch(error => {
-                // Erro se o content.js não estiver mais ativo ou se a mensagem não puder ser entregue
-                console.warn("Não foi possível enviar mensagem de desativação (content.js talvez já esteja inativo ou não injetado):", error.message);
+                // Erro comum se o content.js já foi removido ou não estava injetado.
+                console.warn("Automação Shop App: Não foi possível enviar mensagem de desativação (content.js pode já estar inativo):", error);
             });
     }
 }

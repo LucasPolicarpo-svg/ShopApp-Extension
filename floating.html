@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Automação Shop App</title>
+  <link rel="stylesheet" href="floating.css" />
+</head>
+<body>
+  <div id="ext-box" class="content">
+    <h1>Automação Shop App</h1>
+
+    <div id="pos-btns">
+      <button data-pos="top-left" title="Topo Esquerdo">↖</button>
+      <button data-pos="top-right" title="Topo Direito">↗</button>
+      <button data-pos="bottom-left" title="Base Esquerda">↙</button>
+      <button data-pos="bottom-right" title="Base Direita">↘</button>
+    </div>
+
+    <div class="input-copy">
+      <input type="text" id="campo1" placeholder="Campo 1" />
+      <button class="copy-btn" data-copy="campo1">Copiar</button>
+    </div>
+
+    <div class="input-copy">
+      <input type="text" id="campo2" placeholder="Campo 2" />
+      <button class="copy-btn" data-copy="campo2">Copiar</button>
+    </div>
+
+    <div class="feature-buttons-group">
+      <button id="addRedBorders">Add Borda</button>
+      <button id="removeRedBorders">Remover Borda</button>
+    </div>
+
+    <div class="feature-buttons-group">
+      <button id="injectTitles">Add Títulos</button>
+      <button id="removeTitles">Remover Títulos</button>
+    </div>
+
+    <div class="feature-buttons-group">
+      <button id="injectShowExpired">Mostrar Expirados</button>
+      <button id="injectHideExpired">Ocultar Expirados</button>
+    </div>
+    
+    <div>
+      <button id="execute">Executar</button>
+      <button id="minimizar">Minimizar</button>
+    </div>
+  </div>
+
+  <script src="floating.js"></script>
+</body>
+</html>
